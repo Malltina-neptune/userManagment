@@ -1,30 +1,40 @@
-import {View, Text, FlatList, TextInput} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=20')
+    console.log(currentPage, 'currentPage');
+    fetch(`https://randomuser.me/api/?results=${currentPage}`)
       .then(response => response.json())
       .then(json => setUsers(json.results));
-  }, []);
-
-  const keyExtractor = useCallback((item, index) => index.toString(), []);
+  }, [currentPage]);
 
   const renderItem = useCallback(
     ({item}) => <Text>{item.name.first}</Text>,
     [],
   );
-
+  const keyExtractor = useCallback((item, index) => index.toString(), []);
+  const loadMore = () => {
+    setCurrentPage(currentPage + 10);
+  };
   return (
-    <View>
+    <View style={styles.main}>
       <FlatList
         data={users}
-        keyExtractor={keyExtractor}
         renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReachedThreshold={0.1}
+        onEndReached={loadMore}
       />
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+  },
+});
 export default HomeScreen;
