@@ -1,5 +1,5 @@
-import {View, Text, FlatList} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import {View, Text, FlatList, TextInput} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
@@ -9,11 +9,19 @@ const HomeScreen = () => {
       .then(json => setUsers(json.results));
   }, []);
 
+  const keyExtractor = useCallback((item, index) => index.toString(), []);
+
+  const renderItem = useCallback(
+    ({item}) => <Text>{item.name.first}</Text>,
+    [],
+  );
+
   return (
     <View>
       <FlatList
         data={users}
-        renderItem={({item}) => <Text>{item.name.first}</Text>}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
       />
     </View>
   );
