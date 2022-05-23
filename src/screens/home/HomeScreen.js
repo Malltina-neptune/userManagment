@@ -17,9 +17,11 @@ const HomeScreen = () => {
     [],
   );
   const keyExtractor = useCallback((item, index) => index.toString(), []);
-  const loadMore = () => {
+
+  const loadMore = useCallback(() => {
     setCurrentPage(currentPage + 10);
-  };
+  }, [currentPage]);
+
   return (
     <View style={styles.main}>
       <FlatList
