@@ -7,7 +7,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     console.log(currentPage, 'currentPage');
-    fetch(`https://randomuser.me/api/?results=${currentPage}`)
+    fetch(`https://randomuser.me/api/?page=1&results=${currentPage}&seed=abc`)
       .then(response => response.json())
       .then(json => setUsers(json.results));
   }, [currentPage]);
@@ -19,7 +19,7 @@ const HomeScreen = () => {
   const keyExtractor = useCallback((item, index) => index.toString(), []);
 
   const loadMore = useCallback(() => {
-    setCurrentPage(currentPage + 10);
+    setCurrentPage(currentPage + 20);
   }, [currentPage]);
 
   return (
