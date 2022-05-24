@@ -4,13 +4,17 @@ import React, {useState, useEffect, useCallback} from 'react';
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentResult, setCurrentResult] = useState(20);
 
   useEffect(() => {
     console.log(currentPage, 'currentPage');
-    fetch(`https://randomuser.me/api/?page=1&results=${currentPage}&seed=abc`)
+    console.log(currentResult, 'currentResult');
+    fetch(
+      `https://randomuser.me/api/?page=${currentPage}&results=${currentResult}&seed=abc`,
+    )
       .then(response => response.json())
       .then(json => setUsers(json.results));
-  }, [currentPage]);
+  }, [currentPage, currentResult]);
 
   const renderItem = useCallback(
     ({item}) => <Text>{item.name.first}</Text>,
@@ -19,8 +23,9 @@ const HomeScreen = () => {
   const keyExtractor = useCallback((item, index) => index.toString(), []);
 
   const loadMore = useCallback(() => {
-    setCurrentPage(currentPage + 20);
-  }, [currentPage]);
+    setCurrentPage(currentPage + 1);
+    setCurrentResult(currentResult + 20);
+  }, [currentPage, currentResult]);
 
   return (
     <View style={styles.main}>
