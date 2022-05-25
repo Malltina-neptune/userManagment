@@ -5,17 +5,13 @@ import {Card} from '../../components/Card';
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentResult, setCurrentResult] = useState(20);
 
   useEffect(() => {
     console.log(currentPage, 'currentPage');
-    console.log(currentResult, 'currentResult');
-    fetch(
-      `https://randomuser.me/api/?page=${currentPage}&results=${currentResult}&seed=abc`,
-    )
+    fetch(`https://randomuser.me/api/?page=${currentPage}&results=20&seed=abc`)
       .then(response => response.json())
-      .then(json => setUsers(json.results));
-  }, [currentPage, currentResult]);
+      .then(json => setUsers([...users, ...json.results]));
+  }, [currentPage]);
 
   const renderItem = useCallback(
     ({item}) => (
@@ -32,8 +28,7 @@ const HomeScreen = () => {
 
   const loadMore = useCallback(() => {
     setCurrentPage(currentPage + 1);
-    setCurrentResult(currentResult + 20);
-  }, [currentPage, currentResult]);
+  }, [currentPage]);
 
   return (
     <View style={styles.main}>
