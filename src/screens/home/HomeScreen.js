@@ -1,5 +1,6 @@
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
+import {Card} from '../../components/Card';
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
@@ -17,7 +18,14 @@ const HomeScreen = () => {
   }, [currentPage, currentResult]);
 
   const renderItem = useCallback(
-    ({item}) => <Text>{item.name.first}</Text>,
+    ({item}) => (
+      <Card
+        fistName={item.name.first}
+        lastName={item.name.last}
+        email={item.email}
+        image={item.picture.medium}
+      />
+    ),
     [],
   );
   const keyExtractor = useCallback((item, index) => index.toString(), []);
