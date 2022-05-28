@@ -1,6 +1,8 @@
 import {View, Image, StyleSheet, Text} from 'react-native';
 import React from 'react';
 
+import Search from './Search';
+
 const HomeHeader = () => {
   return (
     <View style={styles.container}>
@@ -21,6 +23,10 @@ const HomeHeader = () => {
 
       <View style={styles.msgWrapper}>
         <Text style={styles.welcomeMsg}>Hello Emily 👋</Text>
+      </View>
+
+      <View style={styles.search}>
+        <Search />
       </View>
     </View>
   );
@@ -49,11 +55,14 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   msgWrapper: {
-    marginTop: 12,
+    marginVertical: 12,
   },
   welcomeMsg: {
     color: 'white',
     fontSize: 16,
+  },
+  search: {
+    marginTop: 15,
   },
 });
 export default HomeHeader;
