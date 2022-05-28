@@ -1,17 +1,21 @@
-import {View, FlatList, StyleSheet} from 'react-native';
+import {SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
+
 import {Card} from '../../components/Card';
 import {Divider} from '../../components/Divider';
+import RenderLoader from '../../components/RenderLoader';
+import HomeHeader from '../../components/HomeHeader';
+
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    console.log(currentPage, 'currentPage');
     fetch(`https://randomuser.me/api/?page=${currentPage}&results=20&seed=abc`)
       .then(response => response.json())
       .then(json => setUsers([...users, ...json.results]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const renderItem = useCallback(
@@ -31,20 +35,25 @@ const HomeScreen = () => {
     setCurrentPage(currentPage + 1);
   }, [currentPage]);
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.flexGrow}>
       <FlatList
         data={users}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.1}
         onEndReached={loadMore}
+
         ItemSeparatorComponent={Divider}
+
+        ListHeaderComponent={HomeHeader}
+        ListFooterComponent={RenderLoader}
+
       />
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
-  main: {
+  flexGrow: {
     flex: 1,
     marginTop: -1,
   },
