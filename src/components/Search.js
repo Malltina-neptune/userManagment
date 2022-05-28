@@ -13,7 +13,7 @@ function Search({searchValue, setSearchValue, onClear}) {
       <Image style={styles.imgStyle} source={require('../assets/search.png')} />
       <TextInput
         placeholder="Type Here..."
-        placeholderTextColor="darkgray"
+        placeholderTextColor="lightgray"
         style={styles.input}
         value={searchValue}
         onChangeText={setSearchValue}
