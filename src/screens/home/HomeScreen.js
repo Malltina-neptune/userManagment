@@ -1,6 +1,7 @@
 import {View, FlatList, StyleSheet} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {Card} from '../../components/Card';
+import {Divider} from '../../components/Divider';
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
@@ -14,9 +15,9 @@ const HomeScreen = () => {
   }, [currentPage]);
 
   const renderItem = useCallback(
-    ({item}) => (
+    ({item, seperators}) => (
       <Card
-        fistName={item.name.first}
+        firstName={item.name.first}
         lastName={item.name.last}
         email={item.email}
         image={item.picture.medium}
@@ -29,7 +30,6 @@ const HomeScreen = () => {
   const loadMore = useCallback(() => {
     setCurrentPage(currentPage + 1);
   }, [currentPage]);
-
   return (
     <View style={styles.main}>
       <FlatList
@@ -38,6 +38,7 @@ const HomeScreen = () => {
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.1}
         onEndReached={loadMore}
+        ItemSeparatorComponent={Divider}
       />
     </View>
   );
@@ -45,6 +46,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
+    marginTop: -1,
   },
 });
 export default HomeScreen;
