@@ -41,6 +41,9 @@ const HomeScreen = () => {
         const items = item.name.first
           ? item.name.first.toUpperCase()
           : ''.toUpperCase();
+        // const items = item.name.first
+        // ? item.name.first.toUpperCase() + item.name.last.toUpperCase()
+        // : ''.toUpperCase() ;
         const text = text.toUpperCase();
         return items.indexOf(text) > -1;
       });
