@@ -10,12 +10,16 @@ const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch(`https://randomuser.me/api/?page=${currentPage}&results=20&seed=abc`)
+    fetch(`https://randomuser.me/api/?page=${currentPage}&results=20`)
       .then(response => response.json())
-      .then(json => setUsers([...users, ...json.results]));
+      .then(json => {
+        setFilterData([...filterData, ...json.results]);
+        setUsers([...users, ...json.results]);
+      })
+      .catch(error => console.error(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
@@ -39,27 +43,25 @@ const HomeScreen = () => {
   const searchFilter = param => {
     if (param) {
       const newData = users.filter(item => {
-        // const fullName = item.name.first + item.name.last;
-        // const itemsFullName = fullName
-        // ? item.name.first.toUpperCase() + item.name.last.toUpperCase()
-        // : ''.toUpperCase() ;
         const items = item.name.first
           ? item.name.first.toUpperCase()
           : ''.toUpperCase();
 
-        const text = text.toUpperCase();
+        const text = param.toUpperCase();
         return items.indexOf(text) > -1;
       });
       setFilterData(newData);
+      setSearch(param);
     } else {
       setFilterData(users);
+      setSearch(param);
     }
   };
 
   return (
     <SafeAreaView style={styles.flexGrow}>
       <FlatList
-        data={users}
+        data={filterData}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.1}
@@ -67,12 +69,12 @@ const HomeScreen = () => {
         ItemSeparatorComponent={Divider}
         ListHeaderComponent={
           <HomeHeader
-            searchValue={searchValue}
-            setSearchValue={searchFilter}
-            onClear={() => setSearchValue('')}
+            searchValue={search}
+            setSearchValue={param => searchFilter(param)}
+            onClear={() => setSearch('')}
           />
         }
-        ListFooterComponent={RenderLoader}
+        ListFooterComponent={<RenderLoader />}
       />
     </SafeAreaView>
   );
