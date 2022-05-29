@@ -10,6 +10,7 @@ const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     fetch(`https://randomuser.me/api/?page=${currentPage}&results=20&seed=abc`)
@@ -57,11 +58,6 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.flexGrow}>
-      <Search
-        searchValue={searchValue}
-        setSearchValue={searchFilter}
-        onClear={() => setSearchValue('')}
-      />
       <FlatList
         data={users}
         renderItem={renderItem}
@@ -69,7 +65,13 @@ const HomeScreen = () => {
         onEndReachedThreshold={0.1}
         onEndReached={loadMore}
         ItemSeparatorComponent={Divider}
-        ListHeaderComponent={HomeHeader}
+        ListHeaderComponent={
+          <HomeHeader
+            searchValue={searchValue}
+            setSearchValue={searchFilter}
+            onClear={() => setSearchValue('')}
+          />
+        }
         ListFooterComponent={RenderLoader}
       />
     </SafeAreaView>

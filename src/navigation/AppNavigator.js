@@ -13,7 +13,6 @@ export const AppNavigator = () => {
       initialRouteName="splash">
       <Stack.Screen name="splash" component={SplashScreen} />
       <Stack.Screen name="home" component={HomeScreen} />
-      <Stack.Screen name="result" component={ResultScreen} />
     </Stack.Navigator>
   );
 };
