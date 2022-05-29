@@ -9,6 +9,7 @@ import HomeHeader from '../../components/HomeHeader';
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     fetch(`https://randomuser.me/api/?page=${currentPage}&results=20&seed=abc`)
@@ -33,8 +34,29 @@ const HomeScreen = () => {
   const loadMore = useCallback(() => {
     setCurrentPage(currentPage + 1);
   }, [currentPage]);
+
+  const searchFilter = param => {
+    if (param) {
+      const newData = users.filter(item => {
+        const items = item.name.first
+          ? item.name.first.toUpperCase()
+          : ''.toUpperCase();
+        const text = text.toUpperCase();
+        return items.indexOf(text) > -1;
+      });
+      setFilterData(newData);
+    } else {
+      setFilterData(users);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.flexGrow}>
+      <Search
+        searchValue={searchValue}
+        setSearchValue={searchFilter}
+        onClear={() => setSearchValue('')}
+      />
       <FlatList
         data={users}
         renderItem={renderItem}
