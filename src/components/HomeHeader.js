@@ -3,7 +3,7 @@ import React from 'react';
 
 import Search from './Search';
 
-const HomeHeader = () => {
+const HomeHeader = ({onClear, setSearchValue, searchValue}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -26,7 +26,11 @@ const HomeHeader = () => {
       </View>
 
       <View style={styles.search}>
-        <Search />
+        <Search
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onClear={onClear}
+        />
       </View>
     </View>
   );
