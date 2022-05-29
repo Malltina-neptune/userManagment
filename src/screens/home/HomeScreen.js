@@ -6,7 +6,6 @@ import {Divider} from '../../components/Divider';
 import RenderLoader from '../../components/RenderLoader';
 import HomeHeader from '../../components/HomeHeader';
 
-
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +18,7 @@ const HomeScreen = () => {
   }, [currentPage]);
 
   const renderItem = useCallback(
-    ({item, seperators}) => (
+    ({item}) => (
       <Card
         firstName={item.name.first}
         lastName={item.name.last}
@@ -42,12 +41,9 @@ const HomeScreen = () => {
         keyExtractor={keyExtractor}
         onEndReachedThreshold={0.1}
         onEndReached={loadMore}
-
         ItemSeparatorComponent={Divider}
-
         ListHeaderComponent={HomeHeader}
         ListFooterComponent={RenderLoader}
-
       />
     </SafeAreaView>
   );
@@ -55,7 +51,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   flexGrow: {
     flex: 1,
-    marginTop: -1,
   },
 });
 export default HomeScreen;
