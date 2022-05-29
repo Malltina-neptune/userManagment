@@ -34,7 +34,7 @@ const HomeScreen = () => {
     ),
     [],
   );
-  const keyExtractor = useCallback((item, index) => index.toString(), []);
+  const keyExtractor = useCallback(item => item.login.uuid, []);
 
   const loadMore = useCallback(() => {
     setCurrentPage(currentPage + 1);
