@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
 
   buttonClose: {
-    marginTop: 60,
+    marginTop: 35,
   },
 
   rowview: {

@@ -5,7 +5,7 @@ export const TitleInfo = ({info}) => {
   return <Text style={styles.txt}>{info}</Text>;
 };
 export const EmailInfo = ({info}) => {
-  return <Text>{info}</Text>;
+  return <Text style={styles.email}>{info}</Text>;
 };
 const styles = StyleSheet.create({
   txt: {
@@ -13,4 +13,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 3,
   },
+  email:{
+    color:'black'
+  }
 });
