@@ -6,12 +6,16 @@ import {Divider} from '../../components/Divider';
 import RenderLoader from '../../components/RenderLoader';
 import HomeHeader from '../../components/HomeHeader';
 import {fetchUsers} from '../../services/API';
+import ModalPage from '../../components/Modal';
+
+const userData = {};
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filterData, setFilterData] = useState([]);
   const [search, setSearch] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetchUsers(currentPage)
@@ -24,13 +28,28 @@ const HomeScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
+  const onPressItem = item => {
+    setModalVisible(true);
+    userData.firstName = item.name.first;
+    userData.lastname = item.name.last;
+    userData.image = item.picture.large;
+    userData.country = item.location.country;
+    userData.phone = item.phone;
+    userData.email = item.email;
+    userData.gender = item.gender;
+  };
+
   const renderItem = useCallback(
     ({item}) => (
       <Card
+        onClick={data => {
+          data = item;
+          onPressItem(data);
+        }}
         firstName={item.name.first}
         lastName={item.name.last}
         email={item.email}
-        image={item.picture.medium}
+        image={item.picture.large}
       />
     ),
     [],
@@ -79,6 +98,11 @@ const HomeScreen = () => {
           />
         }
         ListFooterComponent={<RenderLoader />}
+      />
+      <ModalPage
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        data={userData}
       />
     </SafeAreaView>
   );
