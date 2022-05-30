@@ -4,7 +4,7 @@ import {UserImage} from './ImageInfo';
 import {TitleInfo, EmailInfo} from './TextInfo';
 import {ArrowIcon} from './Icon';
 
-export const Card = ({firstName, lastName, email, image}) => {
+export const Card = ({firstName, lastName, email, image, onClick}) => {
   return (
     <View style={styles.main}>
       <UserImage image={image} />
@@ -17,7 +17,7 @@ export const Card = ({firstName, lastName, email, image}) => {
           <EmailInfo info={email} />
         </View>
       </View>
-      <TouchableOpacity style={styles.icon}>
+      <TouchableOpacity style={styles.icon} onPress={onClick}>
         <ArrowIcon />
       </TouchableOpacity>
     </View>
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
+    backgroundColor: '#fff',
   },
   name: {
     flexDirection: 'row',

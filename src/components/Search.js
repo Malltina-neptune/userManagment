@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 function Search({searchValue, setSearchValue, onClear}) {
   return (
@@ -19,10 +20,7 @@ function Search({searchValue, setSearchValue, onClear}) {
         onChangeText={setSearchValue}
       />
       <TouchableOpacity onPress={onClear}>
-        <Image
-          style={styles.closeButton}
-          source={require('../assets/close.png')}
-        />
+        <FontAwesome name="close" size={26} color="#fff" />
       </TouchableOpacity>
     </View>
   );
