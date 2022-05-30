@@ -1,10 +1,11 @@
 import {SafeAreaView, FlatList, StyleSheet} from 'react-native';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 
 import {Card} from '../../components/Card';
 import {Divider} from '../../components/Divider';
 import RenderLoader from '../../components/RenderLoader';
 import HomeHeader from '../../components/HomeHeader';
+import {fetchUsers} from '../../services/API';
 
 const HomeScreen = () => {
   const [users, setUsers] = useState('');
@@ -13,7 +14,7 @@ const HomeScreen = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch(`https://randomuser.me/api/?page=${currentPage}&results=20`)
+    fetchUsers(currentPage)
       .then(response => response.json())
       .then(json => {
         setFilterData([...filterData, ...json.results]);
@@ -71,7 +72,10 @@ const HomeScreen = () => {
           <HomeHeader
             searchValue={search}
             setSearchValue={param => searchFilter(param)}
-            onClear={() => setSearch('')}
+            onClear={() => {
+              setSearch('');
+              setFilterData(users);
+            }}
           />
         }
         ListFooterComponent={<RenderLoader />}
